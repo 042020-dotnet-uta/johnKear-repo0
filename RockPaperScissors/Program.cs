@@ -2,7 +2,17 @@
  * Jayson
  * Tanner
  * John
- */
+
+	Requirements:
+	1. Write pseudocode for a Rock/Paper/Scissors game.
+	2. Get names from the users.
+	3. Play a game of best 2 of 3 rounds. Each "choice" is a random assignment
+	4. Report the winner and the results of each round.
+	5. Report the ties as part of the output. "Round 1 - John chose paper, Jim chose rock. - John won"
+	6. continue till one player has 2 points.
+	7. "John wins 2-1 with 3 ties."
+*/
+
 
 using System;
 using System.Collections.Generic;
@@ -15,17 +25,7 @@ namespace RockPaperScissors
 	{
 		static void Main(string[] args)
 		{
-			/*
-			Requirements:
-			1. Write pseudocode for a Rock/Paper/Scissors game.
-			2. Get names from the users.
-			3. Play a game of best 2 of 3 rounds. Each "choice" is a random assignment
-			4. Report the winner and the results of each round.
-			5. Report the ties as part of the output. "Round 1 - John chose paper, Jim chose rock. - John won"
-			6. continue till one player has 2 points.
-			7. "John wins 2-1 with 3 ties."
-			*/			
-
+			
 			//Use Random class number generator
 			Random randNum = new Random();
 
@@ -36,6 +36,7 @@ namespace RockPaperScissors
 			//variables for number of wins for each player
 			int player1Wins = 0;
 			int player2Wins = 0;
+
 			//variables for each player's choice (array or list for each player)
 			List<Choice> player1Choices = new List<Choice>();
 			List<Choice> player2Choices = new List<Choice>();
@@ -44,18 +45,19 @@ namespace RockPaperScissors
 			List<string> result = new List<string>();
 
 			//get player 1 name
-			Console.WriteLine("Enter name for player 1: ");
+			Console.Write("Enter name for player 1: ");
 			player1Name = Console.ReadLine();
 
 			//get player 2 name
-			Console.WriteLine("Enter name for player 2: ");
+			Console.Write("Enter name for player 2: ");
 			player2Name = Console.ReadLine();
 
 			//prompt players to start game
-			Console.WriteLine("Press any key to start");
-			Console.ReadKey();
+			/*Console.WriteLine("Press any key to start");
+			Console.ReadKey();*/
 
 			//start game loop do
+			//while player1wins less than 2 and player2wins less than 2
 			do
 			{
 				////generate and store random choice for player 1 
@@ -127,16 +129,14 @@ namespace RockPaperScissors
 				}
 				////if not tie increment winner counter
 
-			} while (player1Wins < 2 && player2Wins < 2);
-			
-			//while player1wins less than 2 and player2wins less than 2
+			} while (player1Wins < 2 && player2Wins < 2);			
 
 			//print results
 			/*iterate through results and print message in following format : 
 			"Round [#] '-' user1 chose [choice], user2 chose [choice]. '-' [winner] won" 
 			Example: "Round 1 - John chose paper, Jim chose rock. - John won"
 			*/
-			for(int i = 0; i < player1Choices.Count - 1; i++)
+			for(int i = 0; i < player1Choices.Count; i++)
 			{
 				if (result[i] == null)
 				{
@@ -148,9 +148,11 @@ namespace RockPaperScissors
 				}				
 			}
 
-			/*print final statement in following format : 
-			"[winner] wins [user1wins] '-' [user2wins] with [length of results - ([user1wins] + [user2wins])] ties."*/
+			//calculate the number of ties by subtracting the sum of player1 and player2 wins from total number of rounds played (total rounds played is the number of choices made)
 			int ties = player1Choices.Count - (player1Wins + player2Wins);
+
+			/*determine the winner and print final statement in following format : 
+			"[winner] wins [user1wins] '-' [user2wins] with [length of results - ([user1wins] + [user2wins])] ties."*/
 			if (player1Wins > player2Wins)
 			{
 				Console.WriteLine($"{player1Name} wins {player1Wins}-{player2Wins} with {ties} ties.");
