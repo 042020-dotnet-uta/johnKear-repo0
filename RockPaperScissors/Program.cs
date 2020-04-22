@@ -25,7 +25,7 @@ namespace RockPaperScissors
 	{
 		static void Main(string[] args)
 		{
-			
+			#region declaredVariables
 			//Use Random class number generator
 			Random randNum = new Random();
 
@@ -43,7 +43,9 @@ namespace RockPaperScissors
 
 			//variable for result of each round (array or list)
 			List<string> result = new List<string>();
+			#endregion
 
+			#region userInput
 			//get player 1 name
 			Console.Write("Enter name for player 1: ");
 			player1Name = Console.ReadLine();
@@ -55,7 +57,9 @@ namespace RockPaperScissors
 			//prompt players to start game
 			/*Console.WriteLine("Press any key to start");
 			Console.ReadKey();*/
+			#endregion
 
+			#region gameIteration
 			//start game loop do
 			//while player1wins less than 2 and player2wins less than 2
 			do
@@ -66,6 +70,8 @@ namespace RockPaperScissors
 				////generate and store random choice for player 2 
 				int roll2 = randNum.Next(3);
 				player2Choices.Add((Choice)roll2);
+
+				
 				////determine outcome and store result
 				/*
 				use switch statement that checks user1 choice
@@ -73,70 +79,70 @@ namespace RockPaperScissors
 				case paper: if user2 choice is rock user1 win. if user2 choice is scissor user2 win.
 				case scissor: if user2 choice is paper user1 win. if user2 choice is rock user2 win.
 				default : nothing
+				////if not tie increment winner counter
 				*/
-				
 				switch ((Choice)roll1)
 				{
 					case Choice.Rock:
-						if((Choice)roll2 == Choice.Scissors)
+						if((Choice)roll2 == Choice.Scissors) //Rock beats Scissors
 						{
 							result.Add(player1Name);
 							player1Wins++;
-						}else if ((Choice)roll2 == Choice.Paper)
+						}else if ((Choice)roll2 == Choice.Paper) //Rock loses to Paper
 						{
 							result.Add(player2Name);
 							player2Wins++;
 						}
 						else
 						{
-							result.Add(null);
+							result.Add(null); //tie
 						}
 						break;
 					case Choice.Paper:
-						if ((Choice)roll2 == Choice.Rock)
+						if ((Choice)roll2 == Choice.Rock) // Paper beats Rock
 						{
 							result.Add(player1Name);
 							player1Wins++;
 						}
-						else if ((Choice)roll2 == Choice.Scissors)
+						else if ((Choice)roll2 == Choice.Scissors) // Paper loses to Scissors
 						{
 							result.Add(player2Name);
 							player2Wins++;
 						}
 						else
 						{
-							result.Add(null);
+							result.Add(null); //tie
 						}
 						break;
 					case Choice.Scissors:
-						if ((Choice)roll2 == Choice.Paper)
+						if ((Choice)roll2 == Choice.Paper) // Scissors beats paper
 						{
 							result.Add(player1Name);
 							player1Wins++;
 						}
-						else if ((Choice)roll2 == Choice.Rock)
+						else if ((Choice)roll2 == Choice.Rock) // Scissors loses to Rock
 						{
 							result.Add(player2Name);
 							player2Wins++;
 						}
 						else
 						{
-							result.Add(null);
+							result.Add(null); // tie
 						}
 						break;
 					default:
 						break;
 				}
-				////if not tie increment winner counter
+			} while (player1Wins < 2 && player2Wins < 2);
+			#endregion
 
-			} while (player1Wins < 2 && player2Wins < 2);			
-
+			#region printResults
 			//print results
 			/*iterate through results and print message in following format : 
 			"Round [#] '-' user1 chose [choice], user2 chose [choice]. '-' [winner] won" 
 			Example: "Round 1 - John chose paper, Jim chose rock. - John won"
 			*/
-			for(int i = 0; i < player1Choices.Count; i++)
+			for (int i = 0; i < player1Choices.Count; i++)
 			{
 				if (result[i] == null)
 				{
@@ -161,6 +167,8 @@ namespace RockPaperScissors
 			{
 				Console.WriteLine($"{player2Name} wins {player2Wins}-{player1Wins} with {ties} ties.");
 			}
+
+			#endregion
 		}
 	}
 }
