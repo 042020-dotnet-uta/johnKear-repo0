@@ -21,6 +21,7 @@ namespace RockPaperScissors
 {
 	//Enum for choices
 	enum Choice { Rock, Paper, Scissors };
+	enum RoundResult { Player1, Player2, tie};
 	class Program
 	{
 		static void Main(string[] args)
@@ -169,6 +170,7 @@ namespace RockPaperScissors
 			}
 
 			#endregion
+
 		}
 	}
 }
