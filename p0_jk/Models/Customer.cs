@@ -6,7 +6,6 @@ namespace p0_jk.Models
 {
 	class Customer
 	{
-		static readonly int custID;
 		private string fName;
 		public string FName
 		{
@@ -29,12 +28,11 @@ namespace p0_jk.Models
 			set { phoneNum = value; }
 		}
 
-
-		static Customer()
+		private OrderHistory orderHistory;
+		
+		public void UpdateOrderHistory(Order order)
 		{
-			custID = custID + 1;
+			
 		}
-
-
 	}
 }
