@@ -7,6 +7,9 @@ For numbers which are multiples of three and five, print “sweet’nSalty” on
 At the end, tell how many sweet’s, how many salty’s, and how many sweet’nSalty’s
 Comment enough to tell me what each line is doing, and site your sources.*/
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -16,22 +19,28 @@ namespace CodeChallenge1
 	{
 		static void Main(string[] args)
 		{
-			// integer variables for sweet, salty, and sweetnsalty counts
+			
+			// integer variables for sweet, salty, and sweetnsalty counts each initialized to zero
 			int sweet = 0, salty = 0, sweetnsalty = 0;
+			//constant variables for divisor by 3 and 5
+			const int divThree = 3;
+			const int divFive = 5;
 
 			#region PrintNumbers
 			//iterate through integers 1 through 100
 			for (int i = 1; i <= 100; i++)
 			{
-				if(IsMultOfThree(i) && IsMultOfFive(i)) //if number is multiple of three and five increment sweetnsalty and print "sweet'nSalty" to console
+				if(IsMultOfX(divThree, i) && IsMultOfX(divFive, i)) //if number is multiple of three and five increment sweetnsalty and print "sweet'nSalty" to console
 				{
 					sweetnsalty++;
 					Console.WriteLine("sweet'nSalty");
-				}else if (IsMultOfThree(i)) //if number is just a multiple of three increment sweet and print "sweet" to console
+				}
+				else if (IsMultOfX(divThree, i)) //if number is just a multiple of three increment sweet and print "sweet" to console
 				{
 					sweet++;
 					Console.WriteLine("sweet"); 
-				}else if (IsMultOfFive(i)) //if number is just a multiple of five increment salty and print "salty" to console
+				}
+				else if (IsMultOfX(divFive, i)) //if number is just a multiple of five increment salty and print "salty" to console
 				{
 					salty++;
 					Console.WriteLine("salty");
@@ -49,6 +58,7 @@ namespace CodeChallenge1
 			#endregion
 		}
 
+		
 		static public bool IsMultOfThree(int x)
 		{
 			//check if parameter is multiple of three
