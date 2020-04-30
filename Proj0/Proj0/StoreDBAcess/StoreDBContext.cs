@@ -17,6 +17,9 @@ namespace StoreDBAcess
 
 		public StoreDBContext() { }
 
+		public StoreDBContext(DbContextOptions<StoreDBContext> options)
+			: base(options) { }
+
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
 		{
 			if (!options.IsConfigured)
@@ -24,5 +27,11 @@ namespace StoreDBAcess
 				options.UseSqlite("Data Source=proj0.db");
 			}
 		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			
+		}
+
 	}
 }

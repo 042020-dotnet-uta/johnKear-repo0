@@ -8,8 +8,6 @@ namespace Proj0
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
-
-			StoreDBAcess.Models.Customer customer = new StoreDBAcess.Models.Customer();
 		}
 	}
 }
