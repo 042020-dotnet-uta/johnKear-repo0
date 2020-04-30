@@ -1,11 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
-namespace p0_jk.Models
+namespace StoreDBAcess.Models
 {
 	class Customer
 	{
+		#region Properties
+		[Key]
+		private int customerId;
+		public int CustomerId
+		{
+			get { return customerId; }
+			set { customerId = value; }
+		}
+		
 		private string fName;
 		public string FName
 		{
@@ -21,7 +32,6 @@ namespace p0_jk.Models
 		}
 
 		private string phoneNum;
-
 		public string PhoneNum
 		{
 			get { return phoneNum; }
@@ -29,10 +39,18 @@ namespace p0_jk.Models
 		}
 
 		private OrderHistory orderHistory;
-		
+		#endregion
+
+		#region Contructors
+
+		#endregion
+
+		#region Methods
 		public void UpdateOrderHistory(Order order)
 		{
-			
+
 		}
+
+		#endregion
 	}
 }
