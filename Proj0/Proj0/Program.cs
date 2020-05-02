@@ -1,5 +1,6 @@
 ﻿using System;
-using StoreDBAcess;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using StoreDBAcess.Models;
 
 namespace Proj0
 {
