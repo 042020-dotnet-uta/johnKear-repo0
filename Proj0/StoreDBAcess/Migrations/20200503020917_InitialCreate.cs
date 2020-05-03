@@ -11,10 +11,10 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     CustomerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     FName = table.Column<string>(nullable: false),
                     LName = table.Column<string>(nullable: false),
-                    PhoneNum = table.Column<string>(nullable: false),
+                    PhoneNum = table.Column<string>(nullable: true),
                     PrefLoc = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -27,7 +27,7 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     LocationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     LocName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -40,8 +40,8 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     OrderHistoryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace StoreDBAcess.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,8 +59,8 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     SalesHistoryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LocationId = table.Column<int>(nullable: false),
+                        .Annotation("Sqlite:Autoincrement", true),
+                    LocationId = table.Column<int>(nullable: true),
                     TotalSalesRevenue = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
@@ -71,7 +71,7 @@ namespace StoreDBAcess.Migrations
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,9 +79,9 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     OrderId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(nullable: false),
-                    LocationId = table.Column<int>(nullable: false),
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CustomerId = table.Column<int>(nullable: true),
+                    LocationId = table.Column<int>(nullable: true),
                     TimeStamp = table.Column<string>(nullable: true),
                     Total = table.Column<double>(nullable: false),
                     OrderHistoryId = table.Column<int>(nullable: true),
@@ -91,11 +91,17 @@ namespace StoreDBAcess.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Orders_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_OrderHistories_OrderHistoryId",
                         column: x => x.OrderHistoryId,
@@ -115,8 +121,8 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LocationId = table.Column<int>(nullable: false),
+                        .Annotation("Sqlite:Autoincrement", true),
+                    LocationId = table.Column<int>(nullable: true),
                     ProductName = table.Column<string>(nullable: false),
                     UnitCost = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
@@ -130,9 +136,29 @@ namespace StoreDBAcess.Migrations
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Products_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Quantities",
+                columns: table => new
+                {
+                    QuantitiesId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Quantity = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Quantities", x => x.QuantitiesId);
+                    table.ForeignKey(
+                        name: "FK_Quantities_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
@@ -142,14 +168,17 @@ namespace StoreDBAcess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_OrderHistories_CustomerId",
                 table: "OrderHistories",
-                column: "CustomerId",
-                unique: true);
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_CustomerId",
+                table: "Orders",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_LocationId",
                 table: "Orders",
-                column: "LocationId",
-                unique: true);
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderHistoryId",
@@ -164,8 +193,7 @@ namespace StoreDBAcess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_LocationId",
                 table: "Products",
-                column: "LocationId",
-                unique: true);
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_OrderId",
@@ -173,16 +201,23 @@ namespace StoreDBAcess.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Quantities_OrderId",
+                table: "Quantities",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SalesHistories_LocationId",
                 table: "SalesHistories",
-                column: "LocationId",
-                unique: true);
+                column: "LocationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Quantities");
 
             migrationBuilder.DropTable(
                 name: "Orders");

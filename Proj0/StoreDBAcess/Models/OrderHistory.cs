@@ -20,13 +20,9 @@ namespace StoreDBAcess.Models
 			set { orderHistoryId = value; }
 		}
 
-		private int customerId;
-		[ForeignKey("Customer")]		
-		public int CustomerId
-		{
-			get { return customerId; }
-			set { customerId = value; }
-		}
+		public int? CustomerId { get; set; }
+		[ForeignKey("CustomerId")]
+		public virtual Customer Customer { get; set; }
 
 		private ICollection<Order> orders;
 		public ICollection<Order> Orders
