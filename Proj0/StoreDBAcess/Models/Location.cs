@@ -26,7 +26,12 @@ namespace StoreDBAcess.Models
 		public string LocName
 		{
 			get { return locName; }
-			set { locName = value; }
+			set {
+				if (value == null)
+					throw new System.ArgumentNullException
+					("Parameter cannot be null", "value");
+				else locName = value;
+			}
 		}
 		
 		#endregion

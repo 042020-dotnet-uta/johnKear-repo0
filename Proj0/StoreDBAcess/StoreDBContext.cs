@@ -29,14 +29,21 @@ namespace StoreDBAcess
 			}
 		}
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		/*protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
-			modelBuilder.Entity<Order>
+			*//*modelBuilder.Entity<Order>
 				(
-					o =>{ o.HasOne<Location>().WithOne()
-						.HasForeignKey<Order>(e => e.LocationId);	
-				}
+					o => {
+						o.HasOne<Customer>().WithOne()
+					  .HasForeignKey<Order>(e => e.CustomerId);
+					},
+					n =>
+					{
+						o.HasOne<Location>().WithOne()
+					  .HasForeignKey<Order>(e => e.CustomerId);
+					}
+
 				);
 
 
@@ -62,8 +69,8 @@ namespace StoreDBAcess
 						o.HasOne<Location>().WithOne()
 					  .HasForeignKey<SalesHistory>(e => e.LocationId);
 					}
-				);
-		}
+				);*//*
+		}*/
 
 	}
 }
