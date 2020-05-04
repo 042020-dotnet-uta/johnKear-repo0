@@ -2,7 +2,7 @@
 
 namespace StoreDBAcess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FinalTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     CustomerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     FName = table.Column<string>(nullable: false),
                     LName = table.Column<string>(nullable: false),
                     PhoneNum = table.Column<string>(nullable: false),
@@ -27,7 +27,7 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     LocationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     LocName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -40,7 +40,7 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     OrderHistoryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CustomerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -59,7 +59,7 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     SalesHistoryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     LocationId = table.Column<int>(nullable: false),
                     TotalSalesRevenue = table.Column<double>(nullable: false)
                 },
@@ -79,7 +79,7 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     OrderId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CustomerId = table.Column<int>(nullable: false),
                     LocationId = table.Column<int>(nullable: false),
                     TimeStamp = table.Column<string>(nullable: true),
@@ -115,7 +115,7 @@ namespace StoreDBAcess.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     LocationId = table.Column<int>(nullable: false),
                     ProductName = table.Column<string>(nullable: false),
                     UnitCost = table.Column<double>(nullable: false),

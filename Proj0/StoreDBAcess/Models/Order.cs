@@ -23,7 +23,7 @@ namespace StoreDBAcess.Models
 		}
 		
 		private int customerId;
-		[ForeignKey("Customer")]		
+		[ForeignKey("CustomerId")]		
 		public int CustomerId
 		{
 			get { return customerId; }
@@ -38,8 +38,8 @@ namespace StoreDBAcess.Models
 			set { locationId = value; }
 		}
 
-		private ICollection<Product> products;
-		public ICollection<Product> Products
+		private List<Product> products;
+		public List<Product> Products
 		{
 			get { return products; }
 			set { products = value; }
@@ -68,6 +68,7 @@ namespace StoreDBAcess.Models
 			//set timestamp and initialize total to zero
 			this.timeStamp =  DateTime.Now.ToString();
 			this.total = 0;
+			this.products = new List<Product>();
 		}
 
 		#endregion

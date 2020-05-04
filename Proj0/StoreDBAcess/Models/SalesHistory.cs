@@ -28,8 +28,8 @@ namespace StoreDBAcess.Models
 			set { locationId = value; }
 		}
 
-		private ICollection<Order> sales;
-		public ICollection<Order> Sales
+		private List<Order> sales;
+		public List<Order> Sales
 		{
 			get { return sales; }
 			set { sales = value; }
@@ -48,6 +48,7 @@ namespace StoreDBAcess.Models
 		#region Constructors
 		public SalesHistory() 
 		{
+			this.sales = new List<Order>();
 			this.totalSalesRevenue = 0;
 		}
 		#endregion
