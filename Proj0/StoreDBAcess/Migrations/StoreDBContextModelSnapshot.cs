@@ -31,7 +31,10 @@ namespace StoreDBAcess.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNum")
+<<<<<<< HEAD
                         .IsRequired()
+=======
+>>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PrefLoc")
@@ -63,10 +66,17 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+<<<<<<< HEAD
                     b.Property<int>("CustomerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("LocationId")
+=======
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("LocationId")
+>>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("OrderHistoryId")
@@ -83,8 +93,9 @@ namespace StoreDBAcess.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("LocationId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("OrderHistoryId");
 
@@ -99,13 +110,16 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+<<<<<<< HEAD
                     b.Property<int>("CustomerId")
+=======
+                    b.Property<int?>("CustomerId")
+>>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7
                         .HasColumnType("INTEGER");
 
                     b.HasKey("OrderHistoryId");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("OrderHistories");
                 });
@@ -116,7 +130,11 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+<<<<<<< HEAD
                     b.Property<int>("LocationId")
+=======
+                    b.Property<int?>("LocationId")
+>>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("OrderId")
@@ -134,12 +152,30 @@ namespace StoreDBAcess.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("LocationId")
-                        .IsUnique();
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("OrderId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("StoreDBAcess.Models.Quantities", b =>
+                {
+                    b.Property<int>("QuantitiesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("QuantitiesId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Quantities");
                 });
 
             modelBuilder.Entity("StoreDBAcess.Models.SalesHistory", b =>
@@ -148,7 +184,11 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+<<<<<<< HEAD
                     b.Property<int>("LocationId")
+=======
+                    b.Property<int?>("LocationId")
+>>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("TotalSalesRevenue")
@@ -156,19 +196,20 @@ namespace StoreDBAcess.Migrations
 
                     b.HasKey("SalesHistoryId");
 
-                    b.HasIndex("LocationId")
-                        .IsUnique();
+                    b.HasIndex("LocationId");
 
                     b.ToTable("SalesHistories");
                 });
 
             modelBuilder.Entity("StoreDBAcess.Models.Order", b =>
                 {
-                    b.HasOne("StoreDBAcess.Models.Location", null)
-                        .WithOne()
-                        .HasForeignKey("StoreDBAcess.Models.Order", "LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("StoreDBAcess.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("StoreDBAcess.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("StoreDBAcess.Models.OrderHistory", null)
                         .WithMany("Orders")
@@ -181,33 +222,34 @@ namespace StoreDBAcess.Migrations
 
             modelBuilder.Entity("StoreDBAcess.Models.OrderHistory", b =>
                 {
-                    b.HasOne("StoreDBAcess.Models.Customer", null)
-                        .WithOne()
-                        .HasForeignKey("StoreDBAcess.Models.OrderHistory", "CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("StoreDBAcess.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("StoreDBAcess.Models.Product", b =>
                 {
-                    b.HasOne("StoreDBAcess.Models.Location", null)
-                        .WithOne()
-                        .HasForeignKey("StoreDBAcess.Models.Product", "LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("StoreDBAcess.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("StoreDBAcess.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
                 });
 
+            modelBuilder.Entity("StoreDBAcess.Models.Quantities", b =>
+                {
+                    b.HasOne("StoreDBAcess.Models.Order", null)
+                        .WithMany("Quantities")
+                        .HasForeignKey("OrderId");
+                });
+
             modelBuilder.Entity("StoreDBAcess.Models.SalesHistory", b =>
                 {
-                    b.HasOne("StoreDBAcess.Models.Location", null)
-                        .WithOne()
-                        .HasForeignKey("StoreDBAcess.Models.SalesHistory", "LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("StoreDBAcess.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
                 });
 #pragma warning restore 612, 618
         }
