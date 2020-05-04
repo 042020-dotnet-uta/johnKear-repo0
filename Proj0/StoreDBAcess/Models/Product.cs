@@ -21,9 +21,13 @@ namespace StoreDBAcess.Models
 			set { productId = value; }
 		}
 
-		public int? LocationId { get; set; }
-		[ForeignKey("LocationId")]
-		public virtual Location Location { get; set; }
+		private int locationId;
+		[ForeignKey("Location")]		
+		public int LocationId
+		{
+			get { return locationId; }
+			set { locationId = value; }
+		}
 
 		private string productName;
 		[Required]
@@ -70,7 +74,7 @@ namespace StoreDBAcess.Models
 		#endregion
 
 		#region Methods
-		
+
 		#endregion
 	}
 }

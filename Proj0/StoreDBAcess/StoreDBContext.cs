@@ -24,7 +24,7 @@ namespace StoreDBAcess
 		{
 			if (!options.IsConfigured)
 			{
-				options.UseSqlite("Data Source=proj0.db");
+				options.UseSqlite("Data Source=D:\\Documents\\RevatureTraining\\RevatureRepo\\johnKear-repo0\\Proj0\\Proj0\\proj0.db");
 				//options.UseSqlServer("Data Source=D:\\Documents\\RevatureTraining\\RevatureRepo\\johnKear-repo0\\Proj0\\Proj0\\proj0.db");
 			}
 		}
@@ -32,18 +32,11 @@ namespace StoreDBAcess
 		/*protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
-			*//*modelBuilder.Entity<Order>
+			modelBuilder.Entity<Order>
 				(
-					o => {
-						o.HasOne<Customer>().WithOne()
-					  .HasForeignKey<Order>(e => e.CustomerId);
-					},
-					n =>
-					{
-						o.HasOne<Location>().WithOne()
-					  .HasForeignKey<Order>(e => e.CustomerId);
-					}
-
+					o =>{ o.HasOne<Location>().WithOne()
+						.HasForeignKey<Order>(e => e.LocationId);	
+				}
 				);
 
 
@@ -69,7 +62,7 @@ namespace StoreDBAcess
 						o.HasOne<Location>().WithOne()
 					  .HasForeignKey<SalesHistory>(e => e.LocationId);
 					}
-				);*//*
+				);
 		}*/
 
 	}
