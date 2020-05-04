@@ -29,7 +29,7 @@ namespace StoreDBAcess
 			}
 		}
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		/*protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
 			modelBuilder.Entity<Order>
@@ -63,7 +63,7 @@ namespace StoreDBAcess
 					  .HasForeignKey<SalesHistory>(e => e.LocationId);
 					}
 				);
-		}
+		}*/
 
 	}
 }

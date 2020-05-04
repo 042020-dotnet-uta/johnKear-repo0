@@ -2,7 +2,7 @@
 
 namespace StoreDBAcess.Migrations
 {
-    public partial class FinalTables : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace StoreDBAcess.Migrations
                     FName = table.Column<string>(nullable: false),
                     LName = table.Column<string>(nullable: false),
                     PhoneNum = table.Column<string>(nullable: false),
-                    PrefLoc = table.Column<string>(nullable: true)
+                    PreferredLoc = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,12 +46,6 @@ namespace StoreDBAcess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderHistories", x => x.OrderHistoryId);
-                    table.ForeignKey(
-                        name: "FK_OrderHistories_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,12 +60,6 @@ namespace StoreDBAcess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalesHistories", x => x.SalesHistoryId);
-                    table.ForeignKey(
-                        name: "FK_SalesHistories_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,12 +78,6 @@ namespace StoreDBAcess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_OrderHistories_OrderHistoryId",
                         column: x => x.OrderHistoryId,
@@ -126,30 +108,12 @@ namespace StoreDBAcess.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_Products_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Products_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderHistories_CustomerId",
-                table: "OrderHistories",
-                column: "CustomerId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_LocationId",
-                table: "Orders",
-                column: "LocationId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderHistoryId",
@@ -162,25 +126,19 @@ namespace StoreDBAcess.Migrations
                 column: "SalesHistoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_LocationId",
-                table: "Products",
-                column: "LocationId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_OrderId",
                 table: "Products",
                 column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesHistories_LocationId",
-                table: "SalesHistories",
-                column: "LocationId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
+
             migrationBuilder.DropTable(
                 name: "Products");
 
@@ -192,12 +150,6 @@ namespace StoreDBAcess.Migrations
 
             migrationBuilder.DropTable(
                 name: "SalesHistories");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "Locations");
         }
     }
 }

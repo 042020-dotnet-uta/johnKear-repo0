@@ -8,7 +8,8 @@ namespace Proj0
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			StoreApp app = new StoreApp();
+			app.Run();
 		}
 	}
 }
