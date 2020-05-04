@@ -28,8 +28,8 @@ namespace StoreDBAcess.Models
 			set { customerId = value; }
 		}
 
-		private ICollection<Order> orders;
-		public ICollection<Order> Orders
+		private List<Order> orders;
+		public List<Order> Orders
 		{
 			get { return orders; }
 			set { orders = value; }
@@ -38,7 +38,10 @@ namespace StoreDBAcess.Models
 		#endregion
 
 		#region Constructors
-		public OrderHistory() { }
+		public OrderHistory()
+		{
+			this.orders = new List<Order>();
+		}
 		#endregion
 
 		#region Methods

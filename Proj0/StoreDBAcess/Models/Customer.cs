@@ -43,13 +43,9 @@ namespace StoreDBAcess.Models
 			get { return phoneNum; }
 			set { phoneNum = value; }
 		}
-		
-		private string prefLoc;
-		public string PrefLoc
-		{
-			get { return prefLoc; }
-			set { prefLoc = value; }
-		}
+
+		[ForeignKey("LocationId")]
+		public int PreferredLoc { get; set; }
 
 		#endregion
 
@@ -76,12 +72,12 @@ namespace StoreDBAcess.Models
 		/// <param name="lname"></param>
 		/// <param name="phone"></param>
 		/// <param name="location"></param>
-		public Customer(string fname, string lname, string phone, string location)
+		public Customer(string fname, string lname, string phone, Location location)
 		{
 			this.fName = fname;
 			this.lName = lname;
 			this.phoneNum = phone;
-			this.prefLoc = location;
+			this.PreferredLoc = location.LocationId;
 		}
 		#endregion
 
