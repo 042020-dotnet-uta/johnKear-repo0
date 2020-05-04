@@ -9,13 +9,8 @@ using StoreDBAcess;
 namespace StoreDBAcess.Migrations
 {
     [DbContext(typeof(StoreDBContext))]
-<<<<<<< HEAD:Proj0/StoreDBAcess/Migrations/20200503163210_FinalTables.Designer.cs
-    [Migration("20200503163210_FinalTables")]
-    partial class FinalTables
-=======
-    [Migration("20200503020917_InitialCreate")]
+    [Migration("20200504233001_InitialCreate")]
     partial class InitialCreate
->>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7:Proj0/StoreDBAcess/Migrations/20200503020917_InitialCreate.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,14 +33,11 @@ namespace StoreDBAcess.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNum")
-<<<<<<< HEAD:Proj0/StoreDBAcess/Migrations/20200503163210_FinalTables.Designer.cs
                         .IsRequired()
-=======
->>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7:Proj0/StoreDBAcess/Migrations/20200503020917_InitialCreate.Designer.cs
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PrefLoc")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("PreferredLoc")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("CustomerId");
 
@@ -73,17 +65,10 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD:Proj0/StoreDBAcess/Migrations/20200503163210_FinalTables.Designer.cs
                     b.Property<int>("CustomerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("LocationId")
-=======
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("LocationId")
->>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7:Proj0/StoreDBAcess/Migrations/20200503020917_InitialCreate.Designer.cs
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("OrderHistoryId")
@@ -100,10 +85,6 @@ namespace StoreDBAcess.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("LocationId");
-
                     b.HasIndex("OrderHistoryId");
 
                     b.HasIndex("SalesHistoryId");
@@ -117,16 +98,10 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD:Proj0/StoreDBAcess/Migrations/20200503163210_FinalTables.Designer.cs
                     b.Property<int>("CustomerId")
-=======
-                    b.Property<int?>("CustomerId")
->>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7:Proj0/StoreDBAcess/Migrations/20200503020917_InitialCreate.Designer.cs
                         .HasColumnType("INTEGER");
 
                     b.HasKey("OrderHistoryId");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("OrderHistories");
                 });
@@ -137,11 +112,7 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD:Proj0/StoreDBAcess/Migrations/20200503163210_FinalTables.Designer.cs
                     b.Property<int>("LocationId")
-=======
-                    b.Property<int?>("LocationId")
->>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7:Proj0/StoreDBAcess/Migrations/20200503020917_InitialCreate.Designer.cs
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("OrderId")
@@ -159,30 +130,9 @@ namespace StoreDBAcess.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("LocationId");
-
                     b.HasIndex("OrderId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("StoreDBAcess.Models.Quantities", b =>
-                {
-                    b.Property<int>("QuantitiesId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("QuantitiesId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Quantities");
                 });
 
             modelBuilder.Entity("StoreDBAcess.Models.SalesHistory", b =>
@@ -191,11 +141,7 @@ namespace StoreDBAcess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD:Proj0/StoreDBAcess/Migrations/20200503163210_FinalTables.Designer.cs
                     b.Property<int>("LocationId")
-=======
-                    b.Property<int?>("LocationId")
->>>>>>> 9149d922ba00a0f316ff96297e6d0d5bd217a6a7:Proj0/StoreDBAcess/Migrations/20200503020917_InitialCreate.Designer.cs
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("TotalSalesRevenue")
@@ -203,21 +149,11 @@ namespace StoreDBAcess.Migrations
 
                     b.HasKey("SalesHistoryId");
 
-                    b.HasIndex("LocationId");
-
                     b.ToTable("SalesHistories");
                 });
 
             modelBuilder.Entity("StoreDBAcess.Models.Order", b =>
                 {
-                    b.HasOne("StoreDBAcess.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("StoreDBAcess.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("StoreDBAcess.Models.OrderHistory", null)
                         .WithMany("Orders")
                         .HasForeignKey("OrderHistoryId");
@@ -227,36 +163,11 @@ namespace StoreDBAcess.Migrations
                         .HasForeignKey("SalesHistoryId");
                 });
 
-            modelBuilder.Entity("StoreDBAcess.Models.OrderHistory", b =>
-                {
-                    b.HasOne("StoreDBAcess.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-                });
-
             modelBuilder.Entity("StoreDBAcess.Models.Product", b =>
                 {
-                    b.HasOne("StoreDBAcess.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("StoreDBAcess.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
-                });
-
-            modelBuilder.Entity("StoreDBAcess.Models.Quantities", b =>
-                {
-                    b.HasOne("StoreDBAcess.Models.Order", null)
-                        .WithMany("Quantities")
-                        .HasForeignKey("OrderId");
-                });
-
-            modelBuilder.Entity("StoreDBAcess.Models.SalesHistory", b =>
-                {
-                    b.HasOne("StoreDBAcess.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
                 });
 #pragma warning restore 612, 618
         }
