@@ -42,7 +42,13 @@ namespace Proj0
 							else
 							{
 								valid = Helpers.IsValidPhoneNumber(phone);
-								if (!valid) Helpers.NotValidOption(phone);
+								if (!valid) Helpers.NotValidOption(phone);								
+								var cust = db.Customers.Where(p => p.PhoneNum == phone).FirstOrDefault();
+								if (cust == null)
+								{
+									valid = false;
+									Helpers.NotValidOption(phone);
+								}								
 							}
 						} while (!valid);
 						if (end) break;
