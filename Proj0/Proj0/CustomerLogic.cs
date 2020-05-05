@@ -229,6 +229,10 @@ namespace Proj0
 			return valid;
 		}
 
+		/// <summary>
+		/// Runs customer options logic
+		/// </summary>
+		/// <param name="phone"></param>
 		public static void CustomerOptions(string phone)
 		{
 			#region Method variables

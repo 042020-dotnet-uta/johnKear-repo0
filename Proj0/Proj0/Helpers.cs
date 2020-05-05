@@ -1,6 +1,7 @@
 ﻿using StoreDBAcess;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Proj0
@@ -25,7 +26,7 @@ namespace Proj0
 		/// </summary>
 		public static void PrintStartMenu()
 		{
-			Console.WriteLine("\n1. Login\n2. New Customer\n3. Location orders\n4. Exit");
+			Console.WriteLine("\n1. Login\n2. New Customer\n3. Location orders\n4. Search Customers\n5. Exit");
 		}
 
 		/// <summary>
@@ -59,7 +60,7 @@ namespace Proj0
 							Console.Clear();
 							NotValidOption(input);
 						}
-						else if (choice < 1 || choice > 4)
+						else if (choice < 1 || choice > 5)
 						{
 							Console.Clear();
 							NotValidOption(input);
@@ -148,6 +149,27 @@ namespace Proj0
 			
 			return valid;
 		}
+
+		public static void SearchCustomer(string name)
+		{
+			var cust = StoreApp.db.Customers.Where(c => c.FName == name).ToList();
+			if(cust.Count() == 0)
+			{
+				Console.WriteLine("No customer found by this name {0}. Press any key to continue", name);
+				Console.ReadKey();
+			}
+			else
+			{
+				foreach(var item in cust)
+				{
+					Console.WriteLine("Customer found:customerId= {0}, firstname= {1}, lastname= {2}, phonenumber= {3}, preferred locationId= {4}", item.CustomerId, item.FName, item.LName, item.PhoneNum, item.PreferredLoc);
+				}
+				Console.WriteLine("\nPress any key to continue.");
+				Console.ReadKey();
+			}
+
+		}
+
 	}
 
 

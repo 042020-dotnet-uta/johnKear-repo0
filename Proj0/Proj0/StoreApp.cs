@@ -14,10 +14,9 @@ namespace Proj0
 		private int userOption;
 		public static StoreDBContext db = new StoreDBContext();
 		public void Run()
-		{
-			
+		{			
 			bool quit = false;
-
+			#region App Menu
 			do
 			{
 				Console.Clear();
@@ -26,7 +25,7 @@ namespace Proj0
 				userOption = Helpers.GetMenuOption(Menus.Start);
 				switch (userOption)
 				{
-					#region Login with existing user
+					#region CASE1: Login with existing user
 					case 1: //login with existing user
 						Console.Clear();
 						bool valid = false;
@@ -57,7 +56,8 @@ namespace Proj0
 						CustomerLogic.CustomerOptions(phone);
 						break;
 					#endregion
-					#region Create new user
+
+					#region CASE2: Create new user
 					case 2: // create new user
 						Console.Clear();
 						Console.WriteLine("Creating a new user");
@@ -65,8 +65,57 @@ namespace Proj0
 						break;
 					#endregion
 
-					#region Location login
+					#region CASE 3: Location sales history
 					case 3: //location
+						valid = false;
+						end = false;
+						Console.Clear();
+						string name1;
+						#region Validate user input
+						do
+						{
+							Console.Write("Enter location name or c to cancel: ");
+							name1 = Console.ReadLine();
+							valid = !(string.IsNullOrWhiteSpace(name1));
+							if (name1 == "c")
+							{
+								valid = true;
+								end = true;
+							}
+							else if (!valid) Helpers.NotValidOption(name1);
+							else valid = LocationLogic.ValidLocation(name1);
+							if (!valid) Helpers.NotValidOption(name1);
+						} while (!valid);
+						if (end) break;
+						#endregion
+						//display sales history for location
+						LocationLogic.LocationSales(name1);
+						break;
+					#endregion
+
+					#region CASE4: Search by name
+					case 4:
+						Console.Clear();
+						valid = false;
+						end = false;
+						string name;
+
+						#region Validate user input
+						do
+						{
+							Console.Write("Enter customer name or c to cancel: ");
+							name = Console.ReadLine();
+							valid = !(string.IsNullOrWhiteSpace(name));
+							if(name == "c")
+							{
+								valid = true;
+								end = true;
+							}else	if (!valid) Helpers.NotValidOption(name);
+						} while (!valid);
+						if (end) break;
+						#endregion
+
+						Helpers.SearchCustomer(name);
 						break;
 					#endregion
 
@@ -83,9 +132,9 @@ namespace Proj0
 				///search customers by name
 				///display order history of store location
 			} while (!quit);
-			
-		}
+			#endregion
 
+		}
 
 	}
 
