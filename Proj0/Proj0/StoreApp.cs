@@ -26,6 +26,27 @@ namespace Proj0
 				switch (userOption)
 				{
 					case 1: //login with existing user
+						Console.Clear();
+						bool valid = false;
+						bool end = false;
+						string phone;
+						do
+						{
+							Console.Write("Enter phone number or enter c to cancel: ");
+							phone = Console.ReadLine();
+							if (phone == "c")
+							{
+								end = true;
+								valid = true;
+							}
+							else
+							{
+								valid = Helpers.IsValidPhoneNumber(phone);
+								if (!valid) Helpers.NotValidOption(phone);
+							}
+						} while (!valid);
+						if (end) break;
+						CustomerLogic.CustomerOptions(phone);
 						break;
 					case 2: // create new user
 						Console.Clear();

@@ -10,10 +10,11 @@ namespace StoreDBAcess
 	{
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Location> Locations { get; set; }
-		public DbSet<Order> Orders { get; set; }
-		public DbSet<OrderHistory> OrderHistories { get; set; }
+		public DbSet<Order> Order { get; set; }
+		public DbSet<OrderDetails> OrderDetails { get; set; }
+		//public DbSet<OrderHistory> OrderHistories { get; set; }
 		public DbSet<Product> Products { get; set; }
-		public DbSet<SalesHistory> SalesHistories { get; set; }
+		//public DbSet<SalesHistory> SalesHistories { get; set; }
 
 		public StoreDBContext() { }
 
@@ -28,29 +29,33 @@ namespace StoreDBAcess
 				//options.UseSqlServer("Data Source=D:\\Documents\\RevatureTraining\\RevatureRepo\\johnKear-repo0\\Proj0\\Proj0\\proj0.db");
 			}
 		}
-
-		/*protected override void OnModelCreating(ModelBuilder modelBuilder)
+/*
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
 			modelBuilder.Entity<Order>
 				(
-					o =>{ o.HasOne<Location>().WithOne()
-						.HasForeignKey<Order>(e => e.LocationId);	
-				}
+					o =>
+					{
+						o.HasOne<Location>().WithOne()
+					  .HasForeignKey<Order>(e => e.LocationId);
+					}
 				);
 
 
 			modelBuilder.Entity<OrderHistory>
 				(
-					o => {
+					o =>
+					{
 						o.HasOne<Customer>().WithOne()
 					  .HasForeignKey<OrderHistory>(e => e.CustomerId);
-					}			
+					}
 				);
 
 			modelBuilder.Entity<Product>
 				(
-					o => {
+					o =>
+					{
 						o.HasOne<Location>().WithOne()
 					  .HasForeignKey<Product>(e => e.LocationId);
 					}
@@ -58,12 +63,13 @@ namespace StoreDBAcess
 
 			modelBuilder.Entity<SalesHistory>
 				(
-					o => {
+					o =>
+					{
 						o.HasOne<Location>().WithOne()
 					  .HasForeignKey<SalesHistory>(e => e.LocationId);
 					}
 				);
-		}*/
-
+		}
+*/
 	}
 }

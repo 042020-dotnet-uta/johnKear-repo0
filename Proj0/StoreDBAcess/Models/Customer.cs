@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Xml;
 using Microsoft.EntityFrameworkCore;
 
 namespace StoreDBAcess.Models
@@ -29,7 +30,7 @@ namespace StoreDBAcess.Models
 		}
 
 		private string lName;
-		[Required()]		
+		[Required]		
 		public string LName
 		{
 			get { return lName; }
@@ -37,7 +38,8 @@ namespace StoreDBAcess.Models
 		}
 
 		private string phoneNum;
-		[Required]		
+		[Required]
+		[MaxLength(10)]
 		public string PhoneNum
 		{
 			get { return phoneNum; }

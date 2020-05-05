@@ -22,7 +22,7 @@ namespace StoreDBAcess.Models
 		}
 
 		private int locationId;
-		[ForeignKey("Location")]		
+		[ForeignKey("LocationId")]		
 		public int LocationId
 		{
 			get { return locationId; }

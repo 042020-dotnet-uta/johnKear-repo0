@@ -14,8 +14,7 @@ namespace StoreDBAcess.Models
 		#region Fields
 
 		private int orderId;
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]		
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int OrderId
 		{
 			get { return orderId; }
@@ -36,13 +35,6 @@ namespace StoreDBAcess.Models
 		{
 			get { return locationId; }
 			set { locationId = value; }
-		}
-
-		private List<Product> products;
-		public List<Product> Products
-		{
-			get { return products; }
-			set { products = value; }
 		}
 
 		private string timeStamp;
@@ -68,14 +60,13 @@ namespace StoreDBAcess.Models
 			//set timestamp and initialize total to zero
 			this.timeStamp =  DateTime.Now.ToString();
 			this.total = 0;
-			this.products = new List<Product>();
 		}
 
 		#endregion
 
 		#region Methods
 
-		/// <summary>
+/*		/// <summary>
 		/// Adds product item to order
 		/// and updates total order cost
 		/// </summary>
@@ -85,7 +76,7 @@ namespace StoreDBAcess.Models
 			this.products.Add(product);
 			this.total = product.UnitCost;
 		}
-
+*/
 		#endregion
 	}
 }
