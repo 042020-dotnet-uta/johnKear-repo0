@@ -248,7 +248,7 @@ namespace Proj0
 				int option = Helpers.GetMenuOption(Menus.Customer);
 				switch (option)
 				{
-					#region Create new order
+					#region CASE1: Create new order
 					case 1: // new order
 						#region Get order details
 						//order details: location, products, qty
@@ -402,13 +402,87 @@ namespace Proj0
 						break;
 					#endregion
 
-					#region Print order details
+					#region CASE2: Print order details
 					case 2: // print order details
+						end = false;
+						valid = false;
+						int id;
+						#region Get order id and validate
+						do
+						{
+							Console.WriteLine("Enter order ID to be displayed or c to cancel");
+							string input = Console.ReadLine();
+							valid = !(string.IsNullOrWhiteSpace(input));
+							valid = int.TryParse(input, out id);
+							if (input == "c")
+							{
+								end = true;
+								valid = true;
+								break;
+							}else if (!valid)
+							{
+								Helpers.NotValidOption(input);
+							}
+							else
+							{
+								//check if ID is in database for given customer
+								var cust = StoreApp.db.Customers.Where(c => c.PhoneNum == phone).FirstOrDefault();
+								var order = StoreApp.db.Order.Where(o => (o.OrderId == id) && o.CustomerId==cust.CustomerId).FirstOrDefault();
+								if (order == null)
+								{
+									Helpers.NotValidOption(input);
+									valid = false;
+								}
+								else
+								{
+									var details = StoreApp.db.OrderDetails.FromSqlRaw("SELECT * FROM OrderDetails WHERE OrderId=={0}", id).ToList();
+									Console.Clear();
+									foreach(var item in details)
+									{
+										Console.WriteLine("OrderId: {0} ; ProductId: {1} ; Quantity: {2}", item.OrderId, item.ProductId, item.Qty);
+										
+									}
+									Console.WriteLine("Press any key to continue.");
+									Console.ReadKey();
+								}
+							}
+							
+						} while (!valid);
+						if (end) break;
+						#endregion
+
+
 						break;
 					#endregion
 
-					#region Print order history
+					#region CASE3: Print order history
 					case 3: //print order history
+						Console.Clear();
+						var cust1 = StoreApp.db.Customers.Where(c => c.PhoneNum == phone).FirstOrDefault();
+						int id1 = cust1.CustomerId;
+						var history = StoreApp.db.Order.Where(o => o.CustomerId == id1).ToList();
+						//var history = StoreApp.db.Order.FromSqlRaw("SELECT * FROM Order WHERE CustomerId=={0}", cust1.CustomerId).ToList();
+						if (history.Count() == 0)
+						{
+							Console.WriteLine("You have no order history. Press any key to continue.");
+							Console.ReadKey();
+						}
+						else
+						{
+							foreach(var item in history)
+							{
+								Console.WriteLine("OrderId: {0}; LocationId: {1}; TimeStamp: {2}; TotalCost: ${3}", item.OrderId, item.LocationId, item.TimeStamp, item.Total);
+								var details1 = StoreApp.db.OrderDetails.FromSqlRaw("SELECT * FROM OrderDetails WHERE OrderId == {0}", item.OrderId).ToList();
+								foreach(var item2 in details1)
+								{
+									var product = StoreApp.db.Products.Where(p => (p.ProductId == item2.ProductId)&&(p.LocationId==item.LocationId)).FirstOrDefault();
+									if(product!=null) //this if statement shouldn't be necessary but orders were added manually
+									Console.WriteLine("---OrderId: {0}; ProductId: {1}; ProductName: {2}; Quantity = {3}; UnitCost: {4}", item2.OrderId, item2.ProductId, product.ProductName, item2.Qty, product.UnitCost);
+								}
+							}
+							Console.WriteLine("\nPress any key to continue.");
+							Console.ReadKey();
+						}
 						break;
 					#endregion
 

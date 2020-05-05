@@ -29,9 +29,11 @@ namespace StoreDBAcess
 				//options.UseSqlServer("Data Source=D:\\Documents\\RevatureTraining\\RevatureRepo\\johnKear-repo0\\Proj0\\Proj0\\proj0.db");
 			}
 		}
-/*
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+		/*protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+
+			modelBuilder.Entity<Product>(c=> { c.HasOne<>} )
 
 			modelBuilder.Entity<Order>
 				(
@@ -42,34 +44,7 @@ namespace StoreDBAcess
 					}
 				);
 
+		}*/
 
-			modelBuilder.Entity<OrderHistory>
-				(
-					o =>
-					{
-						o.HasOne<Customer>().WithOne()
-					  .HasForeignKey<OrderHistory>(e => e.CustomerId);
-					}
-				);
-
-			modelBuilder.Entity<Product>
-				(
-					o =>
-					{
-						o.HasOne<Location>().WithOne()
-					  .HasForeignKey<Product>(e => e.LocationId);
-					}
-				);
-
-			modelBuilder.Entity<SalesHistory>
-				(
-					o =>
-					{
-						o.HasOne<Location>().WithOne()
-					  .HasForeignKey<SalesHistory>(e => e.LocationId);
-					}
-				);
-		}
-*/
 	}
 }

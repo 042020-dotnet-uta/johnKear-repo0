@@ -37,6 +37,7 @@ namespace StoreDBAcess.Models
 			set { locationId = value; }
 		}
 
+		[Required]
 		private string timeStamp;
 		public string TimeStamp
 		{

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Linq;
+using Microsoft.VisualBasic;
 
 namespace Proj0
 {
@@ -25,6 +26,7 @@ namespace Proj0
 				userOption = Helpers.GetMenuOption(Menus.Start);
 				switch (userOption)
 				{
+					#region Login with existing user
 					case 1: //login with existing user
 						Console.Clear();
 						bool valid = false;
@@ -54,13 +56,20 @@ namespace Proj0
 						if (end) break;
 						CustomerLogic.CustomerOptions(phone);
 						break;
+					#endregion
+					#region Create new user
 					case 2: // create new user
 						Console.Clear();
 						Console.WriteLine("Creating a new user");
 						CustomerLogic.CreateNewCustomer();
 						break;
+					#endregion
+
+					#region Location login
 					case 3: //location
 						break;
+					#endregion
+
 					default: //exit program
 						quit = true;
 						break;
