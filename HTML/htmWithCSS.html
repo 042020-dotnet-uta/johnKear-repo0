@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Tech Lead"  content="Nicolas">
+    <title>HtmlFundametnalsDoc</title>
+    <link rel="stylesheet" href="htmlWithCSS.css" type="text/css">
+</head>
+<body>
+    <p>
+        This is the paragraph styling, however, wherever you use an h tag, the css styling is ignored
+        <h1 id="styled-div1">This is my HTML Fundamentals Document</h1>
+        <h2>This is h2</h2>
+        <h3>this is h3</h3>
+        <h4>This is h4</h4>
+        <h5>this is h5</h5>
+        <h6>this is h6</h6>
+    </p>    
+    <!--span does not give styling to all elements inside the <span>-->
+    <span class="span1">
+        This is the span styling
+        <h1>There are a total of 6 header types</h1>
+        <h2><strong>This is strong</strong></h2>
+        <h2><em>This is emphasised</em></h2>
+        <h2>This uses <br>a break</h2>
+        <h3><ins>This is underline</ins></h3>
+        <h3><i>This is all Italic</i></h3>
+    </span>
+    <!--<div> imparts styling to all elements inside the <div>-->>
+    <div class="class1">
+        This is class1 style
+        <h1>There are a total of 6 header types</h1>
+        <h2><strong>This is strong</strong></h2>
+        <h2><em>This is emphasised</em></h2>
+        <h2>This uses <br>a break</h2>
+        <h3><ins>This is underline</ins></h3>
+        <h3><i>This is all Italic</i></h3>            
+    </div>
+    
+    <div>
+        <h1 title="Suprise! This is a title">Hover over me!</h1>
+        
+    </div>
+
+    <!--Use "Lorem" to auto generate garbage text to practice on-->
+    <div title="This is a title">
+        Lorem <mark style="background-color: crimson;">ipsum dolor sit amet</mark>  consectetur adipisicing elit. Aliquid dolore temporibus harum, natus accusantium dolorum, explicabo praesentium, cupiditate consequuntur placeat ea vitae earum ipsam ratione officia impedit dolores! Veniam, quidem.
+    </div>
+    
+    <br>
+    <a href="https://google.com"><strong>This is a link to google.com</strong></a>
+    <!--using # in place of the url the link will take them to the top of the page-->
+    <br>
+    <a class="link1" href="#styled-div1">See where I go!</a>
+    <!--Lists-->
+    <ul>
+        <li>element 1</li>
+        <li>element 2</li>
+        <li>element 3</li>
+        <li>element 4</li>
+        <li>element 5</li>
+    </ul>
+
+    <!--us 'ol>li*3 t get a list with 3 elements-->
+    <ol class="orderedlist1">
+        <li>number 1</li>
+        <li>number 2</li>
+        <li>number 3</li>
+    </ol>
+    <br>
+    <table class="table1">
+        <thead>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+        </thead>
+        <tbody>
+            <tr>
+                <!--you can align left, right or center-->
+                <td align="right">Crowley</td>
+                <td align="right">Texas</td>
+                <td align="right">76028</td>
+            </tr>
+            <tr>
+                <td>Provo</td>
+                <td>Utah</td>
+                <td>84604</td>
+            </tr>
+            <tr>
+                <td>Billings</td>
+                <td>Montana</td>
+                <td>12345</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!--entities with character codes-->
+    <!--https://htmlcheatsheet.com/-->
+    <!--https://docs.emmet.io/cheat-sheet/-->
+    <!--extension live server will refresh browser automatically when changes are saved-->
+    <p>
+        &#x5143; there should be a space &gt;
+    </p>
+    <form action="#" method="GET">
+        <ul>
+            <li>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="user-name">
+                <input type="submit" value="sumbit your name">
+                <input type="checkbox" name="checkbox1">
+                <select name="varkousValues" autofocus>
+                    <option value="value1">V1</option>
+                    <option value="value2">V2</option>
+                    <option value="value3">V3</option>
+                    <option value="value4">V4</option>
+                </select>
+                <input type="email" id="email" name="user-email" placeholder="email@doman.com">
+            </li>
+        </ul>
+    </form>
+
+    
+</body>
+</html>
