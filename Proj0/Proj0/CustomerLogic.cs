@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using StoreDBAcess;
 using StoreDBAcess.Models;
 
@@ -247,7 +248,7 @@ namespace Proj0
 				int option = Helpers.GetMenuOption(Menus.Customer);
 				switch (option)
 				{
-					#region Create new order
+					#region CASE1: Create new order
 					case 1: // new order
 						#region Get order details
 						//order details: location, products, qty
@@ -255,6 +256,9 @@ namespace Proj0
 						Console.Clear();
 						do
 						{
+							quit = false;
+							end = false;
+							valid = false;
 							Console.Write("Enter location for order or enter c to cancel: ");
 							location = Console.ReadLine();
 							valid = !(string.IsNullOrWhiteSpace(location));
@@ -262,7 +266,6 @@ namespace Proj0
 							{
 								end = true;
 								valid = true;
-								break;
 							}
 							else if (!valid)
 							{
@@ -271,8 +274,11 @@ namespace Proj0
 							{
 								//determine if location is in database
 								var loc = StoreApp.db.Locations.Where(l => l.LocName == location).FirstOrDefault();
-								if (loc == null) valid = false;
-								Helpers.NotValidOption(location);
+								if (loc == null)
+								{
+									Helpers.NotValidOption(location);
+									valid = false;
+								}
 							}
 						} while (!valid);
 						if (end) break;
@@ -283,9 +289,9 @@ namespace Proj0
 							currProduct = Console.ReadLine();
 							valid = !(string.IsNullOrWhiteSpace(currProduct));
 							if (!valid) Helpers.NotValidOption(currProduct);
-							else if (location == "c")
+							else if (currProduct == "c")
 							{
-								break;
+								end = true;
 							}
 							else if (currProduct == "p" && (currQty <= 0))
 							{
@@ -293,59 +299,190 @@ namespace Proj0
 								end = true;
 								valid = true;
 								placeOrder = false;
-								break;
 							}
 							else if (currProduct == "p")
 							{
 								end = true;
 								valid = true;
 								placeOrder = true;
-								break;
 							}
 							else
 							{
-								#region Verify product and quantity are available in location                       
-								//get quantity
-								//validate is integer
-								bool isInt = false;
-								do
-								{
-									Console.Write("Enter quantity: ");
-									string input = Console.ReadLine();
-									isInt = int.TryParse(input, out currQty);
-								} while (!isInt);
-								
-								//check if product exits in location
-								var loc = StoreApp.db.Locations.Where(l => l.LocName == location).FirstOrDefault();
+								#region Verify product is available in location 								
 								var prod = StoreApp.db.Products.Where(p => p.ProductName == currProduct).FirstOrDefault();
-								if (loc.LocationId == prod.LocationId && prod.Quantity >= currQty)
+								if (prod == null)
 								{
-									products.Add((currProduct, currQty));
-									valid = true;
+									Helpers.NotValidOption(currProduct);
+									end = false;
+									valid = false;
 								}
-								else if (loc.LocationId == prod.LocationId && prod.Quantity < currQty) Console.WriteLine("Desired quantity exceeds availability");
-								else if (loc.LocationId != prod.LocationId) Console.WriteLine("Product does not exist in this location");
+								else valid = true;
+								if (!valid) continue;
+								var loc = StoreApp.db.Locations.Where(l => l.LocName == location).FirstOrDefault();
+								if (loc.LocationId != prod.LocationId)
+								{
+									Console.WriteLine("Product does not exist in this location");
+								}
+								else
+								{
+									//verify quantity is available
+									//get quantity
+									//validate is integer
+									bool isInt = false;
+									do
+									{
+										Console.Write("Enter quantity: ");
+										string input = Console.ReadLine();
+										isInt = int.TryParse(input, out currQty);
+										if (isInt && (currQty < 0)) isInt = false;
+									} while (!isInt);
+									if (prod.Quantity < currQty)
+									{
+										Console.WriteLine("Not enough available product at this location.");
+									}
+									else if (prod.Quantity >= currQty)
+									{
+										bool found = false;
+										foreach((string, int) it in products)
+										{
+											if(it.Item1 == currProduct)
+											{
+												Console.WriteLine("Cannot add duplicate product to order.");
+												found = true;
+											}
+										}
+										if (!found)
+										{
+											products.Add((currProduct, currQty));
+											Console.WriteLine("Product added to order");
+										}
+									}
+								}
 								#endregion
-							}
+							}	
+
 							#endregion
 						} while (!end);
-						
 
 						#endregion
 
 						#region Create new order and add to database
-
+						if (placeOrder)
+						{
+							Order thisOrder = new Order();
+							double total = 0;
+							var loc = StoreApp.db.Locations.Where(l => l.LocName == location).FirstOrDefault();
+							var cust = StoreApp.db.Customers.Where(c => c.PhoneNum == phone).FirstOrDefault();
+							
+							foreach ((string, int) item in products)
+							{
+								var prod = StoreApp.db.Products.Where(p => (p.ProductName==item.Item1)&&(p.LocationId==loc.LocationId)).FirstOrDefault();
+								total += (item.Item2 * prod.UnitCost);
+								prod.Quantity -= item.Item2;
+							}
+							var max = StoreApp.db.Order.Max(o => o.OrderId);
+							thisOrder.OrderId = max + 1;
+							thisOrder.Total = total;
+							thisOrder.LocationId = loc.LocationId;
+							thisOrder.CustomerId = cust.CustomerId;
+							StoreApp.db.Add(thisOrder);
+							StoreApp.db.SaveChanges();
+							foreach((string, int) item in products)
+							{
+								var prod = StoreApp.db.Products.Where(p => (p.ProductName == item.Item1) && (p.LocationId == loc.LocationId)).FirstOrDefault();
+								OrderDetails details = new OrderDetails();
+								details.OrderId = thisOrder.OrderId;
+								details.ProductId = prod.ProductId;
+								details.Qty = item.Item2;
+								StoreApp.db.Add(details);
+								StoreApp.db.SaveChanges();
+							}
+						}
 						#endregion
 						break;
 					#endregion
 
-					#region Print order details
+					#region CASE2: Print order details
 					case 2: // print order details
+						end = false;
+						valid = false;
+						int id;
+						#region Get order id and validate
+						do
+						{
+							Console.WriteLine("Enter order ID to be displayed or c to cancel");
+							string input = Console.ReadLine();
+							valid = !(string.IsNullOrWhiteSpace(input));
+							valid = int.TryParse(input, out id);
+							if (input == "c")
+							{
+								end = true;
+								valid = true;
+								break;
+							}else if (!valid)
+							{
+								Helpers.NotValidOption(input);
+							}
+							else
+							{
+								//check if ID is in database for given customer
+								var cust = StoreApp.db.Customers.Where(c => c.PhoneNum == phone).FirstOrDefault();
+								var order = StoreApp.db.Order.Where(o => (o.OrderId == id) && o.CustomerId==cust.CustomerId).FirstOrDefault();
+								if (order == null)
+								{
+									Helpers.NotValidOption(input);
+									valid = false;
+								}
+								else
+								{
+									var details = StoreApp.db.OrderDetails.FromSqlRaw("SELECT * FROM OrderDetails WHERE OrderId=={0}", id).ToList();
+									Console.Clear();
+									foreach(var item in details)
+									{
+										Console.WriteLine("OrderId: {0} ; ProductId: {1} ; Quantity: {2}", item.OrderId, item.ProductId, item.Qty);
+										
+									}
+									Console.WriteLine("Press any key to continue.");
+									Console.ReadKey();
+								}
+							}
+							
+						} while (!valid);
+						if (end) break;
+						#endregion
+
+
 						break;
 					#endregion
 
-					#region Print order history
+					#region CASE3: Print order history
 					case 3: //print order history
+						Console.Clear();
+						var cust1 = StoreApp.db.Customers.Where(c => c.PhoneNum == phone).FirstOrDefault();
+						int id1 = cust1.CustomerId;
+						var history = StoreApp.db.Order.Where(o => o.CustomerId == id1).ToList();
+						//var history = StoreApp.db.Order.FromSqlRaw("SELECT * FROM Order WHERE CustomerId=={0}", cust1.CustomerId).ToList();
+						if (history.Count() == 0)
+						{
+							Console.WriteLine("You have no order history. Press any key to continue.");
+							Console.ReadKey();
+						}
+						else
+						{
+							foreach(var item in history)
+							{
+								Console.WriteLine("OrderId: {0}; LocationId: {1}; TimeStamp: {2}; TotalCost: ${3}", item.OrderId, item.LocationId, item.TimeStamp, item.Total);
+								var details1 = StoreApp.db.OrderDetails.FromSqlRaw("SELECT * FROM OrderDetails WHERE OrderId == {0}", item.OrderId).ToList();
+								foreach(var item2 in details1)
+								{
+									var product = StoreApp.db.Products.Where(p => (p.ProductId == item2.ProductId)&&(p.LocationId==item.LocationId)).FirstOrDefault();
+									if(product!=null) //this if statement shouldn't be necessary but orders were added manually
+									Console.WriteLine("---OrderId: {0}; ProductId: {1}; ProductName: {2}; Quantity = {3}; UnitCost: {4}", item2.OrderId, item2.ProductId, product.ProductName, item2.Qty, product.UnitCost);
+								}
+							}
+							Console.WriteLine("\nPress any key to continue.");
+							Console.ReadKey();
+						}
 						break;
 					#endregion
 
