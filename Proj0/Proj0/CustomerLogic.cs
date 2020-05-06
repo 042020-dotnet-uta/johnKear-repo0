@@ -42,11 +42,14 @@ namespace Proj0
 		public static void CreateNewCustomer()
 		{
 			#region Method variables
+			//variable to temporarily hold fname, lname, phone, prefloc
 			string fname = "", lname = "", phone = "", prefloc ="";
+			//bool control variables
 			bool missingProperty = true;
 			bool createCustomer = true;
 			bool addPrefLoc = false;
 			bool valid = false;
+			//switch control variabl
 			int step = 1;
 			#endregion
 
@@ -58,8 +61,7 @@ namespace Proj0
 					#region Get first name
 					case 1: // get user first name
 						do
-						{
-							
+						{							
 							Console.Write("Enter first name: ");
 							fname = Console.ReadLine();
 							valid = !(string.IsNullOrWhiteSpace(fname));
@@ -108,8 +110,9 @@ namespace Proj0
 								number = StoreApp.db.Customers.Where(p => p.PhoneNum == phone).FirstOrDefault();
 							}catch(Exception e)
 							{
-								Console.WriteLine("Error finding customer with number {0}, with error: {1}", phone, e);
-								Console.WriteLine("Try again");
+								Console.WriteLine("Error finding customer with number {0}, with error: {1}", phone, e.Message);
+								Console.WriteLine("Try again. Press any key to continue");
+								Console.ReadKey();
 								valid = false;
 							}
 							finally

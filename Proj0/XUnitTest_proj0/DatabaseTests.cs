@@ -19,7 +19,7 @@ namespace XUnitTest_proj0
 		[Fact] //test1
 		public void AddsValidCustomerToDB()
 		{
-			#region Assert
+			#region Arrange
 			var options = new DbContextOptionsBuilder<StoreDBContext>()
 				.UseInMemoryDatabase(databaseName: "AddsPlayerToDB")
 				.Options;
@@ -447,7 +447,10 @@ namespace XUnitTest_proj0
 
 		}
 
-		[Fact] //test1
+		/// <summary>
+		/// Updates a Customers Preferred location
+		/// </summary>
+		[Fact] //test9
 		public void UpdateCustPrefLoc()
 		{
 			//Arrange -- create an object to configure in-memory DB
@@ -494,6 +497,9 @@ namespace XUnitTest_proj0
 
 		}
 
+		/// <summary>
+		/// EMPTY!!!!
+		/// </summary>
 		[Fact] //test10
 		public void Test10()
 		{

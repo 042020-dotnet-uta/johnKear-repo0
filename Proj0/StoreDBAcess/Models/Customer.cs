@@ -12,6 +12,9 @@ namespace StoreDBAcess.Models
 	{
 		#region Fields
 
+		/// <summary>
+		/// Primary key ID
+		/// </summary>
 		private int customerId;
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,6 +24,10 @@ namespace StoreDBAcess.Models
 			set { customerId = value; }
 		}
 
+		/// <summary>
+		/// customer first name
+		/// required
+		/// </summary>
 		private string fName;
 		[Required]		
 		public string FName
@@ -29,6 +36,10 @@ namespace StoreDBAcess.Models
 			set { fName = value; }
 		}
 
+		/// <summary>
+		/// customer last name
+		/// required
+		/// </summary>
 		private string lName;
 		[Required]		
 		public string LName
@@ -37,6 +48,11 @@ namespace StoreDBAcess.Models
 			set { lName = value; }
 		}
 
+		/// <summary>
+		/// customer phone number
+		/// required 
+		/// must be 10 digits
+		/// </summary>
 		private string phoneNum;
 		[Required]
 		[MaxLength(10)]
@@ -46,6 +62,10 @@ namespace StoreDBAcess.Models
 			set { phoneNum = value; }
 		}
 
+		/// <summary>
+		/// preferrerd location
+		/// foreign key
+		/// </summary>
 		[ForeignKey("LocationId")]
 		public int PreferredLoc { get; set; }
 
