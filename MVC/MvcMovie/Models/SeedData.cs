@@ -27,6 +27,7 @@ namespace MvcMovie.Models
 						Title = "The son of Frankenstein",
 						ReleaseDate = DateTime.Parse("1939-1-1"),
 						Genre = "Thriller",
+						Rating = "PG",
 						Price = 4.99M
 					},
 					new Movie
@@ -34,6 +35,7 @@ namespace MvcMovie.Models
 						Title = "The Pincess Bride",
 						ReleaseDate = DateTime.Parse("1986-1-1"),
 						Genre = "Fantasy",
+						Rating = "PG",
 						Price = 4.99M
 					},
 					new Movie
@@ -41,6 +43,7 @@ namespace MvcMovie.Models
 						Title = "The Goonies",
 						ReleaseDate = DateTime.Parse("1985-1-1"),
 						Genre = "Thriller",
+						Rating = "PG",
 						Price = 4.99M
 					},
 					new Movie
@@ -48,6 +51,7 @@ namespace MvcMovie.Models
 						Title = "Terminator",
 						ReleaseDate = DateTime.Parse("1986-1-1"),
 						Genre = "Sci-Fi",
+						Rating = "R",
 						Price = 4.99M
 					},
 					new Movie
@@ -55,11 +59,12 @@ namespace MvcMovie.Models
 						Title = "Top gun",
 						ReleaseDate = DateTime.Parse("1986-1-1"),
 						Genre = "Action",
+						Rating = "PG-13",
 						Price = 4.99M
 					}
 
 
-					); 
+					); ; 
 
 				context.SaveChanges();
 
