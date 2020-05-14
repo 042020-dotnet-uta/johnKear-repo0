@@ -23,7 +23,7 @@ stages:
       - job: 'test'
         dependsOn: 'build'
         steps:
-          - script: dotnet test 'Proj0/XUnitTest_proj0/DatabaseTests.cs'
+          - script: dotnet test 'Proj0/XUnitTest_proj0/XUnitTest_proj0.csproj'
           - script: echo 'tests run'
       - job: 'publish'
         dependsOn: 'test'
