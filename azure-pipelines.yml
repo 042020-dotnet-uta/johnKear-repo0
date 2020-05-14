@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# Whenever a change is made to the master branch
+trigger:
+- master
+
+# using ubuntu latest vmImage
+pool:
+  vmImage: 'ubuntu-latest'
+
+pr: 'none'
+
+stages:
+  - stage:
+    jobs:
+      - job: 'build'
+        steps:
+          - script: dotnet build 'Proj0/Proj0/Proj0.sln'
+          - script: echo 'Project built'
+      - job: 'test'
+        steps:
+          - script: dotnet test 'Proj0/XUnitTest_proj0/DatabaseTests.cs'
+          - script: echo 'tests run'
+      - job: 'publish'
+        steps:
+          - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
