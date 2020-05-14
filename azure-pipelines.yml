@@ -21,9 +21,11 @@ stages:
           - script: dotnet build 'Proj0/Proj0/Proj0.sln'
           - script: echo 'Project built'
       - job: 'test'
+        dependsOn: 'build'
         steps:
           - script: dotnet test 'Proj0/XUnitTest_proj0/DatabaseTests.cs'
           - script: echo 'tests run'
       - job: 'publish'
+        dependsOn: 'test'
         steps:
           - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
