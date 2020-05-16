@@ -29,8 +29,8 @@ stages:
           - task: DotNetCoreCLI@2
             displayName: 'dotnet test'
             inputs:
-              command: 'test'
-              arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+              
+              arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=Proj0/XUnitTest_proj0/TestResults/Coverage/'
               publishTestResults: true
               projects: 'Proj0/XUnitText_proj0/XUnitTest_proj0.csproj' # update with your test project directory
 
@@ -38,7 +38,7 @@ stages:
             displayName: 'Publish code coverage report'
             inputs:
               codeCoverageTool: 'Cobertura'
-              summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+              summaryFileLocation: 'Proj0/XUnitTest_proj0/TestResults/Coverage/coverage.cobertura.xml'
           
           - task: SonarCloudAnalyze@1
       - job: 'publish'
