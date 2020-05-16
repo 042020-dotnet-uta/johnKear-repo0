@@ -2,7 +2,15 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'proj0'
+    organization: 'firstsonar2020'
+    scannerMode: 'MSBuild'
+    projectKey: '0f92f5207f7f0b675eac0a8c86988fbb04241c8a'
+    projectName: 'proj0'
 
+- task: SonarCloudAnalyze@1
 # Whenever a change is made to the master branch
 trigger:
 - master
