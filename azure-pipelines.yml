@@ -34,7 +34,7 @@ stages:
             inputs:
               command: test
               arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
-              projects: '**/*Tests.csproj'
+              projects: '**/*XUnitTest_proj0.csproj'
               nobuild: true
           - script: |
                dotnet tool install -g dotnet-reportgenerator-globaltool
