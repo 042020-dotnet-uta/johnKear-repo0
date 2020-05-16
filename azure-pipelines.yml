@@ -15,7 +15,7 @@ pr: 'none'
 stages:
   - stage:
     jobs:
-      - job: 'build'
+      - job: 'SonarSetup'
         steps:
           - task: SonarCloudPrepare@1
             inputs:
@@ -24,12 +24,20 @@ stages:
               scannerMode: 'MSBuild'
               projectKey: '0f92f5207f7f0b675eac0a8c86988fbb04241c8a'
               projectName: 'proj0'
+      - job: 'build'
+        dependsOn: 'SonarSetup'
+        steps:          
           - script: dotnet build 'Proj0/Proj0/Proj0.sln'
           - script: echo 'Project built'
+      - job: 'tests'
+        dependsOn: 'build'
+        steps:
           - script: dotnet test 'Proj0/XUnitTest_proj0/XUnitTest_proj0.csproj'
-          - script: echo 'tests run'
+      - job: 'SonarAnalysis'
+        dependsOn: 'tests'
+        steps:
           - task: SonarCloudAnalyze@1
       - job: 'publish'
-        dependsOn: 'build'
+        dependsOn: 'SonarAnalysis'
         steps:
           - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
