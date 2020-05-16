@@ -28,6 +28,9 @@ stages:
           - script: echo 'Project built'
           - script: dotnet test 'Proj0/XUnitTest_proj0/XUnitTest_proj0.csproj'
           - script: echo 'tests run'
+          - task: PublishCodeCoverageResults@1
+            inputs:
+              summaryFileLocation: Proj0/XUnitTest_proj0/TestResults/72941aa6-0220-4728-affa-a062e6dd5674/coverage.cobertura.xml
           - task: SonarCloudAnalyze@1
       - job: 'publish'
         dependsOn: 'build'
