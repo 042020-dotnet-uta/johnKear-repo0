@@ -32,6 +32,7 @@ stages:
               testRunner: VSTest
               testResultsFiles: '**/*.trx'
           - task: SonarCloudAnalyze@1
+          - task: SonarCloudPublish@1
       - job: 'publish'
         dependsOn: 'build'
         steps:
