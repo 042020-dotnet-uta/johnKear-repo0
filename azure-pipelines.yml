@@ -40,8 +40,7 @@ stages:
             displayName: 'Publish Code Coverage'
             inputs:
               codeCoverageTool: Cobertura
-              summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
-              reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+              summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
           - task: SonarCloudAnalyze@1
           - task: SonarCloudPublish@1
       - job: 'publish'
