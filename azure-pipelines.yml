@@ -43,8 +43,6 @@ stages:
               codeCoverageTool: Cobertura
               summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
           - task: SonarCloudAnalyze@1
-          - task: SonarCloudPublish@1
-      - job: 'publish'
-        dependsOn: 'build'
-        steps:
           - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
+          - task: SonarCloudPublish@1
+          
