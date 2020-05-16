@@ -29,7 +29,7 @@ stages:
           - task: DotNetCoreCLI@2
             displayName: 'dotnet test'
             inputs:
-              
+              command: 'test'
               arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=Proj0/XUnitTest_proj0/TestResults/Coverage/'
               publishTestResults: true
               projects: 'Proj0/XUnitText_proj0/XUnitTest_proj0.csproj' # update with your test project directory
