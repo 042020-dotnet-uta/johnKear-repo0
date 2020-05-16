@@ -15,7 +15,17 @@ pr: 'none'
 stages:
   - stage:
     jobs:
+      - job: 'build'
+        steps:
+          - script: dotnet build 'Proj0/Proj0/Proj0.sln'
+          - script: echo 'Project built'
+      - job: 'test'
+        dependsOn: 'build'
+        steps:
+          - script: dotnet test 'Proj0/XUnitTest_proj0/XUnitTest_proj0.csproj'
+          - script: echo 'tests run'
       - job: 'sonarcloud'
+        dependsOn: "test"
         steps:
           - task: SonarCloudPrepare@1
             inputs:
@@ -28,16 +38,7 @@ stages:
         dependsOn: 'sonarcloud'
         steps:
           - task: SonarCloudAnalyze@1
-      - job: 'build'
-        steps:
-          - script: dotnet build 'Proj0/Proj0/Proj0.sln'
-          - script: echo 'Project built'
-      - job: 'test'
-        dependsOn: 'build'
-        steps:
-          - script: dotnet test 'Proj0/XUnitTest_proj0/XUnitTest_proj0.csproj'
-          - script: echo 'tests run'
       - job: 'publish'
-        dependsOn: 'test'
+        dependsOn: 'sonarcode'
         steps:
           - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
