@@ -26,11 +26,20 @@ stages:
               projectName: 'proj0'
           - script: dotnet build 'Proj0/Proj0/Proj0.sln'
           - script: echo 'Project built'
-          - script: dotnet test 'Proj0/XUnitTest_proj0/XUnitTest_proj0.csproj'
-          - script: echo 'tests run'
-          - task: PublishCodeCoverageResults@1
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet test'
             inputs:
-              summaryFileLocation: Proj0/XUnitTest_proj0/TestResults/72941aa6-0220-4728-affa-a062e6dd5674/coverage.cobertura.xml
+              command: 'test'
+              arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+              publishTestResults: true
+              projects: 'Proj0/XUnitText_proj0/XUnitTest_proj0.csproj' # update with your test project directory
+
+          - task: PublishCodeCoverageResults@1
+            displayName: 'Publish code coverage report'
+            inputs:
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+          
           - task: SonarCloudAnalyze@1
       - job: 'publish'
         dependsOn: 'build'
