@@ -28,14 +28,13 @@ stages:
                 sonar.exclusions=**/obj/**,**/*.dll
                 sonar.branch.name=$(Build.SourceBranchName)
                 sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-                sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
-                sonar.cs.cobertura.reportPaths=$(Build.SourcesDirectory)/**/coverage.cobertura.xml
+                sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.cobertura.xml
           - script: dotnet build 'Proj0/Proj0/Proj0.sln'
           - task: DotNetCoreCLI@2
             displayName: dotnet test
             inputs:
               command: 'test'
-              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=CoverletOutputFormat=covertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
               projects: '**/*XUnitTest_proj0.csproj'
               nobuild: true
           - task: PublishCodeCoverageResults@1
