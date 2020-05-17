@@ -34,7 +34,7 @@ stages:
             displayName: dotnet test
             inputs:
               command: 'test'
-              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --loger trx'
+              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
               projects: '**/*XUnitTest_proj0.csproj'
               nobuild: true
           - script: |
