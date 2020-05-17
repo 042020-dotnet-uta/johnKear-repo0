@@ -34,11 +34,9 @@ stages:
             displayName: dotnet test
             inputs:
               command: 'test'
-              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
+              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Coverletoutput=$(Build.SourcesDirector)/TestResults/Coverage --logger trx'
               projects: '**/*XUnitTest_proj0.csproj'
               nobuild: true
-          - script: reportgenerator '-reports:$(Build.SourcesDirectory)/**/coverage.opencover.xml' '-targetdir:$(Build.SourcesDirectory)/CodeCoverage' '-reporttypes:HtmlInline_AzurePipelines;Cobertura'
-            displayName: create code coverage report
           - task: PublishCodeCoverageResults@1
             displayName: 'Publish Code Coverage'
             inputs:
