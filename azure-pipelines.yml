@@ -29,6 +29,7 @@ stages:
                 sonar.branch.name=$(Build.SourceBranchName)
                 sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
                 sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+                sonar.cs.cobertura.reportPaths=$(Build.SourcesDirectory)/**/coverage.covertura.xml
           - script: dotnet build 'Proj0/Proj0/Proj0.sln'
           - task: DotNetCoreCLI@2
             displayName: dotnet test
@@ -41,8 +42,9 @@ stages:
             displayName: 'Publish Code Coverage'
             inputs:
               codeCoverageTool: Cobertura
-              summaryFileLocation: '$**/*coverage.cobertura.xml'
+              summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
           - task: SonarCloudAnalyze@1
-          - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
           - task: SonarCloudPublish@1
+          - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
+          
           
