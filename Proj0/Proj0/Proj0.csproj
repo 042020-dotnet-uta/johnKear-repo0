@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DebugType>Full</DebugType>
-   
+    <ProjectGuid>{20321F25-886B-4084-B95E-88BC337C4DCC}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
