@@ -1,5 +1,4 @@
 # Starter pipeline
-
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -14,7 +13,6 @@ pool:
 pr: 'none'
 
 
-
 stages:
   - stage:
     jobs:
@@ -22,11 +20,11 @@ stages:
         steps:
           - task: SonarCloudPrepare@1
             inputs:
-              SonarCloud: 'Project0'
-              organization: 'testkey12345'
+              SonarCloud: 'proj0'
+              organization: 'firstsonar2020'
               scannerMode: 'MSBuild'
-              projectKey: 'sonar.thisIsMyProjKey123'
-              projectName: 'project0'
+              projectKey: '0f92f5207f7f0b675eac0a8c86988fbb04241c8a'
+              projectName: 'proj0'
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/*.dll
                 sonar.branch.name=$(Build.SourceBranchName)
@@ -45,9 +43,7 @@ stages:
             inputs:
               codeCoverageTool: Cobertura
               summaryFileLocation: '$(Build.SourcesDirectory)/**/*.xml'
-              reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage' 
+              reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'              
           - task: SonarCloudAnalyze@1
           - task: SonarCloudPublish@1
-            inputs:
-              pollingTimeoutSec: '300'
           - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
