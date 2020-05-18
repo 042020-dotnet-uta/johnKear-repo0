@@ -17,7 +17,7 @@ stages:
               SonarCloud: 'MyProj'
               organization: 'neworganization'
               scannerMode: 'MSBuild'
-              projectKey: 'a60f87ac3439f702e9a4a3ffe85a209258a90e90'
+              projectKey: 'myProjKey'
               projectName: 'myProjKey'
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/*.dll
