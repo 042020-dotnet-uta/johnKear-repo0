@@ -24,7 +24,7 @@ stages:
                                 sonar.branch.name=$(Build.SourceBranchName)
                                 sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
                                 sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
-          - script: dotnet build 'Proj0/Proj0/Proj0.sln'f
+          - script: dotnet build 'Proj0/Proj0/Proj0.sln'
           - task: DotNetCoreCLI@2
             displayName: dotnet test
             inputs:
