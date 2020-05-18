@@ -25,7 +25,7 @@ stages:
               SonarCloud: 'Project0'
               organization: 'testkey12345'
               scannerMode: 'MSBuild'
-              projectKey: '722ecd6f75aee346b10372b711721ca33042b4fd'
+              projectKey: 'sonar.thisIsMyProjKey123'
               projectName: 'project0'
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/*.dll
@@ -33,16 +33,11 @@ stages:
                 sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
                 sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
           - script: dotnet build 'Proj0/Proj0/Proj0.sln'
-          - script: echo 'Project built'
           - task: DotNetCoreCLI@2
             displayName: dotnet test
             inputs:
               command: 'test'
-              arguments: '--configuration $(BuildConfiguration) 
-                /p:CollectCoverage=true 
-                /p:CoverletOutputFormat=opencover 
-                /p:Coverletoutput=$(Build.SourcesDirector)/TestResults/Coverage 
-                --logger trx'
+              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Coverletoutput=$(Build.SourcesDirector)/TestResults/Coverage --logger trx'
               projects: '**/*XUnitTest_proj0.csproj'
               nobuild: true
           - task: PublishCodeCoverageResults@1
