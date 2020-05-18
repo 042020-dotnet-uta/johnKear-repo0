@@ -22,7 +22,7 @@ stages:
         steps:
           - task: SonarCloudPrepare@1
             inputs:
-              SonarCloud: 'Project0'
+              SonarCloud: 'proj0'
               organization: 'test'
               scannerMode: 'MSBuild'
               projectKey: 'sonar.thisIsMyProjKey123'
