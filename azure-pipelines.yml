@@ -13,8 +13,6 @@ pool:
 
 pr: 'none'
 
-
-
 stages:
   - stage:
     jobs:
@@ -23,9 +21,9 @@ stages:
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: 'Project0'
-              organization: 'test'
+              organization: 'testkey12345'
               scannerMode: 'MSBuild'
-              projectKey: 'myNewKey'
+              projectKey: '722ecd6f75aee346b10372b711721ca33042b4fd'
               projectName: 'project0'
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/*.dll
