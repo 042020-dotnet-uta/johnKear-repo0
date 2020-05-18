@@ -12,6 +12,8 @@ pool:
 
 pr: 'none'
 
+
+
 stages:
   - stage:
     jobs:
@@ -19,30 +21,31 @@ stages:
         steps:
           - task: SonarCloudPrepare@1
             inputs:
-              SonarCloud: 'proj0'
-              organization: 'firstsonar2020'
+              SonarCloud: 'Project0'
+              organization: 'testkey12345'
               scannerMode: 'MSBuild'
-              projectKey: '0f92f5207f7f0b675eac0a8c86988fbb04241c8a'
-              projectName: 'proj0'
+              projectKey: 'thisIsMyProjectKey'
+              projectName: 'project0'
               extraProperties: |
                 sonar.exclusions=**/obj/**,**/*.dll
                 sonar.branch.name=$(Build.SourceBranchName)
                 sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
                 sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
           - script: dotnet build 'Proj0/Proj0/Proj0.sln'
+          - script: echo 'Project built'
           - task: DotNetCoreCLI@2
             displayName: dotnet test
             inputs:
               command: 'test'
-              arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Coverletoutput=$(Build.SourcesDirector)/TestResults/Coverage --logger trx'
+              arguments: '--configuration $(BuildConfiguration) 
+                /p:CollectCoverage=true 
+                /p:CoverletOutputFormat=opencover 
+                /p:Coverletoutput=$(Build.SourcesDirector)/TestResults/Coverage 
+                --logger trx'
               projects: '**/*XUnitTest_proj0.csproj'
               nobuild: true
-          - task: PublishCodeCoverageResults@1
-            displayName: 'Publish Code Coverage'
-            inputs:
-              codeCoverageTool: Cobertura
-              summaryFileLocation: '$(Build.SourcesDirectory)/**/*.xml'
-              reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'              
           - task: SonarCloudAnalyze@1
           - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
           - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
