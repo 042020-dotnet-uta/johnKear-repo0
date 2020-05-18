@@ -44,6 +44,12 @@ stages:
                 --logger trx'
               projects: '**/*XUnitTest_proj0.csproj'
               nobuild: true
+          - task: PublishCodeCoverageResults@1
+            displayName: 'Publish Code Coverage'
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: '$(Build.SourcesDirectory)/**/*.xml'
+              reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage' 
           - task: SonarCloudAnalyze@1
           - task: SonarCloudPublish@1
             inputs:
