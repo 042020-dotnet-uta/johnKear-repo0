@@ -102,5 +102,5 @@ stages:
           - task: SonarCloudAnalyze@1
           #  SonarCloudPublish publishes the sonar analysis results to sonar cloud
           - task: SonarCloudPublish@1
-          #  dotnet publish publishes the results to Azure DevOps
+          #  dotnet publish publishes the proj to a given location. In this case it is to the github repo
           - script: dotnet publish 'Proj0/Proj0/Proj0.sln'
